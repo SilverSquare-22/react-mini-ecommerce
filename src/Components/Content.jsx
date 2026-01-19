@@ -16,18 +16,25 @@ const Content = ({ cartadditems, setcartadditems}) => {
   };
 
   const deleteitem = (item) => {
-    const updatedarr = cartadditems.filter(
-      (items) => items.id !== item.id
-    );
-    setcartadditems(updatedarr);
-  };
+  let removed = false;
+
+  const updatedarr = cartadditems.filter((items) => {
+    if (items.id === item.id && !removed) {
+      removed = true;     // skip only the first match
+      return false;
+    }
+    return true;
+  });
+
+  setcartadditems(updatedarr);
+};
 
   useEffect(() => {
     getData();
   }, []);
 
   return (
-    <div>
+    <div id="stock">
       <h2>Total items in cart {cartadditems.length}</h2>
 
       <button onClick={() => navigate("/cart")}>
@@ -37,10 +44,10 @@ const Content = ({ cartadditems, setcartadditems}) => {
       <h2>Products</h2>
 
       {productData.length === 0 ? (
-        <h1>Loading...</h1>
+        <h4>Loading...</h4>
       ) : (
         productData.map((product) => (
-          <div key={product.id}>
+          <div class="prod" key={product.id}>
             <p>{product.title}</p>
             <img src={product.thumbnail} alt={product.title} width="120" />
             <p>${product.price}</p>
