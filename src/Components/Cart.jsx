@@ -12,18 +12,18 @@ const Cart = ({ cartadditems}) => {
       <h2>Your Cart</h2>
 
       {cartadditems.map((item) => (
-        <p key={item.id}>
+        <p class="prod" key={item.id}>
           
           {item.title} - ${item.price}
 
-          <img src={item.thumbnail} alt={item.title}/>
+          <img style={{width: 200}} src={item.thumbnail} alt={item.title}/>
        
         </p>
       ))}
 
       <h3>Total: ${total}</h3>
 
-      <button onClick={()=>navigate("/payment")} disabled={ cartadditems.length===0} >pay now </button>
+      <button onClick={()=>navigate("/payment")} disabled={ cartadditems.length===0} >Pay Now </button>
       <button onClick={()=>navigate("/")}>Go to home page </button>
     </div>
   );
